@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      Pet.belongsTo(models.PetTypes, {
+      Pet.belongsTo(models.PetType, {
         foreignKey: { allowNull: false, name: 'petTypeId' },
         onDelete: 'RESTRICT',
         onUpdate: 'CASCADE',
