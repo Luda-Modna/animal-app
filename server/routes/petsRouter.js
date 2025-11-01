@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { validate } = require('./../middleware');
 const { petsController } = require('./../controller');
 
 const petsRouter = Router();
@@ -6,7 +7,7 @@ const petsRouter = Router();
 petsRouter
   .route('/')
   .get(petsController.getPets)
-  .post(petsController.createPet);
+  .post(validate.validatePetOnCreate, petsController.createPet);
 
 petsRouter
   .route('/:id')
