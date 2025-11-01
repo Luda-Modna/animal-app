@@ -1,12 +1,19 @@
-module.exports.createPet = (req, res, next) => {};
+const { Pet } = require('./../models');
 
-module.exports.getPets = (req, res, next) => {};
+module.exports.createPet = async (req, res, next) => {
+  const { body } = req;
+  try {
+    const createdPet = await Pet.create(body);
+    res.status(201).send({ data: createdPet });
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports.getPetsById = (req, res, next) => {};
+module.exports.getPets = async (req, res, next) => {};
 
-module.exports.updatePetsById = (req, res, next) => {};
+module.exports.getPetsById = async (req, res, next) => {};
 
-module.exports.deletePetsById = (req, res, next) => {};
+module.exports.updatePetsById = async (req, res, next) => {};
 
-
-
+module.exports.deletePetsById = (asyncreq, res, next) => {};
