@@ -4,7 +4,7 @@ const petsTypeRouter = require('./petsTypeRouter');
 
 const router = Router();
 
-router.use('/pets', petsRouter);
+router.use('/pet', petsRouter);
 router.use('/petTypes', petsTypeRouter);
 
 module.exports = router;
