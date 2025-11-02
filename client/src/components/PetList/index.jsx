@@ -5,6 +5,8 @@ import {
   getPetsThunk,
   getTypesThunk,
 } from './../../store/slices/petsSlice';
+import styles from './PetList.module.sass'
+
 
 function PetsList ({
   pets,
@@ -27,8 +29,8 @@ function PetsList ({
   }, [petType]);
 
   return (
-    <>
-      <section>
+    <div className={styles.petsPage}>
+      <section className={styles.filter}>
         {petTypes.map(t => (
           <label key={t.id}>
             <input
@@ -44,21 +46,21 @@ function PetsList ({
           </label>
         ))}
       </section>
-      <ul>
+      <ul className={styles.petList}>
         {pets.map(p => (
-          <li key={p.id}>
-            <p>
+          <li className={styles.petItem} key={p.id}>
+            <p className={styles.petsName}>
               {p.name}, {p.description}
             </p>
-            <p>
+            <p className={styles.petsText}>
               {p.owner}, {p.ownerContacts}, {p.city}
             </p>
-            <p>{p.lostDate}</p>
-            <p>{petTypes.find(t => t.id === p.petTypeId).type}</p>
+            <p className={styles.petsText}>{p.lostDate}</p>
+            <p className={styles.petsType}> {petTypes.find(t => t.id === p.petTypeId).type}</p>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
