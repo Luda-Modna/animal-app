@@ -1,0 +1,40 @@
+.cat 
+  width: 120px
+  height: 100px
+  background-size: contain
+  background-repeat: no-repeat
+  position: absolute
+  bottom: 100px
+  left: 0
+  animation: run 0.8s steps(8) infinite, move 6s linear infinite
+
+
+@keyframes run 
+  0% 
+    background-image: url('../../assets/imagesCat/runningCat1.png')
+  12.5%
+    background-image: url('../../assets/imagesCat/runningCat2.png')
+  25%
+    background-image: url('../../assets/imagesCat/runningCat3.png')
+  37.5%
+    background-image: url('../../assets/imagesCat/runningCat4.png')
+  50%
+    background-image: url('../../assets/imagesCat/runningCat5.png')
+  62.5%
+    background-image: url('../../assets/imagesCat/runningCat6.png')
+  75%
+    background-image: url('../../assets/imagesCat/runningCat7.png')
+  87.5%
+    background-image: url('../../assets/imagesCat/runningCat8.png')
+  100%
+    background-image: url('../../assets/imagesCat/runningCat1.png')
+  
+
+
+@keyframes move 
+  0%
+    left: -150px
+  100%
+    left: 100%
+  
+
