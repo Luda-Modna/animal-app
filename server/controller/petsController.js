@@ -11,10 +11,18 @@ module.exports.createPet = async (req, res, next) => {
 };
 
 module.exports.getPets = async (req, res, next) => {
+  const { query } = req;
+
+  const where = {};
+
+  if (query.petType) {
+    where.petTypeId = query.petType;
+  }
   try {
     const foundPets = await Pet.findAll({
       raw: true,
       attributes: { exclude: ['createdAt', 'updatedAt'] },
+      where,
     });
 
     res.status(200).send({ data: foundPets });
