@@ -3,6 +3,8 @@ import { Form, Formik, Field, ErrorMessage } from 'formik';
 import { connect } from 'react-redux';
 import CONSTANTS from '../../constants';
 import { createPetThunk, getTypesThunk } from '../../store/slices/petsSlice';
+import styles from './PetForm.module.sass'
+
 
 function PetForm ({ petTypes, getTypes, createPet }) {
   const initialValues = {
@@ -29,16 +31,16 @@ function PetForm ({ petTypes, getTypes, createPet }) {
       onSubmit={handleSubmit}
     >
       {formikProps => (
-        <Form>
-          <label>
+        <Form className={styles.form}>
+          <label className={styles.label}>
             Name:
             <Field name='name' type='text' placeholder="Pet's name" autoFocus />
           </label>
-          <label>
+          <label className={styles.label}>
             Your Name:
             <Field name='owner' type='text' placeholder='Your Name' />
           </label>
-          <label>
+          <label className={styles.label}>
             Your Contacts:
             <Field
               name='ownerContacts'
@@ -46,15 +48,15 @@ function PetForm ({ petTypes, getTypes, createPet }) {
               placeholder='Your Contacts'
             />
           </label>
-          <label>
+          <label className={styles.label}>
             Describe Your Pet:
             <Field name='description' type='text' placeholder='description' />
           </label>
-          <label>
+          <label className={styles.label}>
             Lost Date:
             <Field name='lostDate' type='date' />
           </label>
-          <label>
+          <label className={styles.label}>
             City:
             <select
               name='city'
@@ -70,7 +72,7 @@ function PetForm ({ petTypes, getTypes, createPet }) {
           </label>
           {petTypes.length !== 0 && (
             <>
-              <label>
+              <label className={styles.label}>
                 Pet's type:
                 <select
                   name='petTypeId'
@@ -86,7 +88,7 @@ function PetForm ({ petTypes, getTypes, createPet }) {
               </label>
             </>
           )}
-          <button type='submit'>Add Pet</button>
+          <button className={styles.button} type='submit'>Add Pet</button>
         </Form>
       )}
     </Formik>
