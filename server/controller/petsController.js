@@ -1,4 +1,5 @@
 const createHttpError = require('http-errors');
+const _ = require('lodash');
 const { Pet } = require('./../models');
 
 module.exports.createPet = async (req, res, next) => {
@@ -34,7 +35,30 @@ module.exports.getPets = async (req, res, next) => {
 
 module.exports.getPetsById = async (req, res, next) => {};
 
-module.exports.updatePetsById = async (req, res, next) => {};
+module.exports.updatePetsById = async (req, res, next) => {
+  const {
+    body,
+    params: { id },
+  } = req;
+
+  try {
+    const [updatedPetsCount, [updatedPet]] = await Pet.update(body, {
+      where: { id },
+      raw: true,
+      returning: true,
+    });
+
+    if (!updatedPetsCount) {
+      return next(createHttpError(404, 'Pet not found ):'));
+    }
+
+    const preparedPet = _.omit(updatedPet, ['createdAt', 'updatedAt']);
+
+    res.status(200).send({ data: preparedPet });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports.deletePetsById = async (req, res, next) => {
   const { id } = req.params;

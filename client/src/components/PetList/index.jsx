@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   changePetTypeFilter,
   deletePetsThunk,
   getPetsThunk,
   getTypesThunk,
+  updatePetsThunk,
 } from './../../store/slices/petsSlice';
 import styles from './PetList.module.sass';
+import EditPetForm from '../EditPetForm';
 
 function PetsList ({
   pets,
@@ -18,7 +20,10 @@ function PetsList ({
   getTypes,
   changePetType,
   deletePet,
+  updatePetData,
 }) {
+  const [editingPet, setEditingPet] = useState(null);
+
   const { petType } = filter;
 
   useEffect(() => {
@@ -28,6 +33,24 @@ function PetsList ({
   useEffect(() => {
     getPets(filter);
   }, [petType]);
+
+  const handleSave = (id, formData) => {
+    updatePetData(id, formData);
+    setEditingPet(null);
+  };
+
+  const handleCancel = () => setEditingPet(null);
+
+  if (editingPet) {
+    return (
+      <EditPetForm
+        pet={editingPet}
+        petTypes={petTypes}
+        onSave={handleSave}
+        onCancel={handleCancel}
+      />
+    );
+  }
 
   return (
     <div className={styles.petsPage}>
@@ -67,9 +90,14 @@ function PetsList ({
             <p className={styles.petsType}>
               {petTypes.find(t => t.id === p.petTypeId).type}
             </p>
-            <div>
-              <button>Edit</button>
-              <button className={styles.deleteBttn} onClick={() => deletePet(p.id)}>Delete</button>
+            <div className={styles.bttnContainer}>
+              <button className={styles.updateBttn} onClick={() => setEditingPet(p)}>Edit</button>
+              <button
+                className={styles.deleteBttn}
+                onClick={() => deletePet(p.id)}
+              >
+                Delete
+              </button>
             </div>
           </li>
         ))}
@@ -83,6 +111,7 @@ const mapDispatchToProps = dispatch => ({
   getTypes: () => dispatch(getTypesThunk()),
   changePetType: data => dispatch(changePetTypeFilter(data)),
   deletePet: id => dispatch(deletePetsThunk(id)),
+  updatePetData: (id, values) => dispatch(updatePetsThunk({ id, values })),
 });
 
 const mapStateToProps = ({ petsData }) => petsData;

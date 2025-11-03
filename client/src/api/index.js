@@ -11,3 +11,6 @@ export const getPets = filter =>
   httpClient.get(`/pets?${queryString.stringify(filter)}`);
 
 export const deletePet = id => httpClient.delete(`/pets/${id}`);
+
+export const updatePet = (id, values) =>
+  httpClient.patch(`/pets/${id}`, values);
