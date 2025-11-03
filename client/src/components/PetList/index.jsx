@@ -5,8 +5,7 @@ import {
   getPetsThunk,
   getTypesThunk,
 } from './../../store/slices/petsSlice';
-import styles from './PetList.module.sass'
-
+import styles from './PetList.module.sass';
 
 function PetsList ({
   pets,
@@ -45,6 +44,13 @@ function PetsList ({
             {t.type}
           </label>
         ))}
+        <button
+          type='button'
+          onClick={() => changePetType(null)}
+          className={styles.resetBttn}
+        >
+          Reset Filter
+        </button>
       </section>
       <ul className={styles.petList}>
         {pets.map(p => (
@@ -56,7 +62,10 @@ function PetsList ({
               {p.owner}, {p.ownerContacts}, {p.city}
             </p>
             <p className={styles.petsText}>{p.lostDate}</p>
-            <p className={styles.petsType}> {petTypes.find(t => t.id === p.petTypeId).type}</p>
+            <p className={styles.petsType}>
+              {' '}
+              {petTypes.find(t => t.id === p.petTypeId).type}
+            </p>
           </li>
         ))}
       </ul>
