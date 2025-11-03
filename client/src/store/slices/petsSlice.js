@@ -53,6 +53,18 @@ export const createPetThunk = createAsyncThunk(
   }
 );
 
+export const deletePetsThunk = createAsyncThunk(
+  `${PET_SLICE_NAME}/delete`,
+  async (payload, { rejectWithValue }) => {
+    try {
+      await API.deletePet(payload); 
+      return payload;
+    } catch (err) {
+      return rejectWithValue({ errors: err.response.data });
+    }
+  }
+);
+
 const petsSlice = createSlice({
   name: PET_SLICE_NAME,
   initialState,
@@ -91,6 +103,18 @@ const petsSlice = createSlice({
       state.error = null;
     });
     builder.addCase(getPetsThunk.rejected, (state, { payload }) => {
+      state.error = payload;
+      state.isFetching = false;
+    });
+    builder.addCase(deletePetsThunk.pending, state => {
+      state.isFetching = true;
+      state.error = null;
+    });
+    builder.addCase(deletePetsThunk.fulfilled, (state, { payload }) => {
+      state.isFetching = false;
+      state.pets = state.pets.filter(p => p.id !== payload);
+    });
+    builder.addCase(deletePetsThunk.rejected, (state, { payload }) => {
       state.error = payload;
       state.isFetching = false;
     });

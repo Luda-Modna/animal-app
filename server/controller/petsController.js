@@ -1,3 +1,4 @@
+const createHttpError = require('http-errors');
 const { Pet } = require('./../models');
 
 module.exports.createPet = async (req, res, next) => {
@@ -35,4 +36,16 @@ module.exports.getPetsById = async (req, res, next) => {};
 
 module.exports.updatePetsById = async (req, res, next) => {};
 
-module.exports.deletePetsById = (asyncreq, res, next) => {};
+module.exports.deletePetsById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const deletedPetCount = await Pet.destroy({ where: { id } });
+    if (!deletedPetCount) {
+      return next(createHttpError(404, 'Pet not found ):'));
+    }
+
+    res.status(204).end();
+  } catch (error) {
+    next(err);
+  }
+};

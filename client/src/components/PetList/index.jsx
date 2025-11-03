@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   changePetTypeFilter,
+  deletePetsThunk,
   getPetsThunk,
   getTypesThunk,
 } from './../../store/slices/petsSlice';
@@ -16,6 +17,7 @@ function PetsList ({
   getPets,
   getTypes,
   changePetType,
+  deletePet,
 }) {
   const { petType } = filter;
 
@@ -63,9 +65,12 @@ function PetsList ({
             </p>
             <p className={styles.petsText}>{p.lostDate}</p>
             <p className={styles.petsType}>
-              {' '}
               {petTypes.find(t => t.id === p.petTypeId).type}
             </p>
+            <div>
+              <button>Edit</button>
+              <button className={styles.deleteBttn} onClick={() => deletePet(p.id)}>Delete</button>
+            </div>
           </li>
         ))}
       </ul>
@@ -77,6 +82,7 @@ const mapDispatchToProps = dispatch => ({
   getPets: data => dispatch(getPetsThunk(data)),
   getTypes: () => dispatch(getTypesThunk()),
   changePetType: data => dispatch(changePetTypeFilter(data)),
+  deletePet: id => dispatch(deletePetsThunk(id)),
 });
 
 const mapStateToProps = ({ petsData }) => petsData;
