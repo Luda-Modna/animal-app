@@ -80,18 +80,25 @@ function PetsList ({
       <ul className={styles.petList}>
         {pets.map(p => (
           <li className={styles.petItem} key={p.id}>
-            <p className={styles.petsName}>
-              {p.name}, {p.description}
-            </p>
-            <p className={styles.petsText}>
-              {p.owner}, {p.ownerContacts}, {p.city}
-            </p>
-            <p className={styles.petsText}>{p.lostDate}</p>
-            <p className={styles.petsType}>
-              {petTypes.find(t => t.id === p.petTypeId).type}
-            </p>
+            <div className={styles.petsCard}>
+              <p className={styles.petsName}>
+                {p.name}, {p.description}
+              </p>
+              <p className={styles.petsText}>
+                {p.owner}, {p.ownerContacts}, {p.city}
+              </p>
+              <p className={styles.petsText}>{p.lostDate}</p>
+              <p className={styles.petsType}>
+                {petTypes.find(t => t.id === p.petTypeId).type}
+              </p>
+            </div>
             <div className={styles.bttnContainer}>
-              <button className={styles.updateBttn} onClick={() => setEditingPet(p)}>Edit</button>
+              <button
+                className={styles.updateBttn}
+                onClick={() => setEditingPet(p)}
+              >
+                Edit
+              </button>
               <button
                 className={styles.deleteBttn}
                 onClick={() => deletePet(p.id)}
